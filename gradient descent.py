@@ -7,12 +7,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-X = np.random.rand(100)
+X = np.random.rand(100) #rand: 0부터 100까지의 난수 설정
 Y = 0.2 * X * 0.5
 
-plt.figure(figsize=(8, 6)) #figure 명령어: 
-plt.scatter(X, Y) #scatter 명령어: 
-plt.show() 
+plt.figure(figsize=(8, 6)) #figure: matplotlib로 그래프를 그리려면 figure라는 객체가 필요함. Axes객체도 필요.
+plt.scatter(X, Y) #scatter: (X, Y)에 기본 마커가 표시됨. 산점도를 그리는데 사용한다.
+plt.show()  #show: 그래프를 화면에 나타나도록 하는 함수
 
 def plot_prediction(pred, y):  
     plt.figure(figsize=(8, 6))
@@ -21,7 +21,7 @@ def plot_prediction(pred, y):
     plt.show
 
 ## Gradient Descent 구현 구간
-W = np.random.uniform(-1, 1)
+W = np.random.uniform(-1, 1) 
 b = np.random.uniform(-1, 1)
 
 learning_rate = 0.7
