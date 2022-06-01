@@ -1,0 +1,46 @@
+<사용된 함수 정리>
+rand: 0부터 100까지의 난수 설정.(numpy)
+figure: matplotlib로 그래프를 그리려면 figure라는 객체가 필요함. Axes객체도 필요.(matplotlib)
+scatter: (X, Y)에 기본 마커가 표시됨. 산점도를 그리는데 사용한다.(matplotlib)
+show: 그래프를 화면에 나타나도록 하는 함수.(matplotlib)
+np.random.uniform()은 균등분포 함수이다. 최소값, 최대값, 데이터 개수 순서로 parameter를 입력해줌. 여기에는 1과 -1뿐이라 그 사이의 값을 뽑아준다.(numpy)
+abs: 숫자의 절대값을 구하는데에 사용되는 함수.
+
+<사용자 정의 함수 분석>
+-17~21- 
+def plot_prediction(pred, y):  
+    plt.figure(figsize=(8, 6))
+    plt.scatter(X, y)
+    plt.scatter(X, pred)
+    plt.show
+pred와 y값을 prameter로 하여 x좌표를 X로 하고 두개의 parameter를 y좌표로 하여 산점도로 좌표평면에 표시.
+
+<경사하강법 구현 코드 분석>
+-27- learning_rate = 0.7
+한 번 학습할 때 얼마만큼 가중치(weight)를 업데이트 해야 하는지 학습 양을 의미합니다.(여기에서는 가중치와 바이어스를 업데이트)
+너무 큰 학습률 (Learning Rate)은 가중치 갱신이 크게 되어 자칫 Error가 수렴하지 못하고 발산할 수 있으며,(over shooting)\
+너무 작은 학습률은 가중치 갱신이 작게 되어 가중치 갱신이 충분히 되지 않고, 학습이 끝나 버릴 수 있습니다. 즉 과소 적합되어 있는 상태로 남아 있을 수 있습니다.
+
+-29~45-
+for epoch in range(100): #epoch는 학습진행을 의미
+    Y_Pred = W * X + b
+
+    error = np.abs(Y_Pred - Y).mean() #평균 오차 정의
+    if error < 0.001: 
+        break #error의 값이 0.001미만이 될 때 까지 계속 돌림.
+    #gradient descent 
+    w_grad = learning_rate * ((Y_Pred - Y)*X).mean()
+    b_grad = learning_rate * ((Y_Pred - Y)).mean()
+
+    #W, b값 갱신 (error의 값이 0.001이 될 때 까지)
+    W = W - w_grad
+    b = b - b_grad
+
+    if epoch % 5 == 0:
+        Y_Pred = W * X + b
+        plot_prediction(Y_Pred, Y)
+
+학습을 100번 진행함. 
+오차함수를 평균제곱오차로 정의함. 
+오차율이 0.001 미만이 되도록 가중치와 바이어스의 값을 경사하강으로 계속 갱신함. 그리고 Y_Pred값을 계속 초기화
+앞서 정의된 plot_prediction()함수를 이용하여학습 진행수가 5의 배수면 Y_Pred값과 Y의 값을 y좌표로 하는 X를 x좌표로 하는 곳에 점을 찍는다.(scatter()함수 이용)
