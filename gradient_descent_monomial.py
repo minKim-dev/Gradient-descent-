@@ -25,4 +25,48 @@ plt.figure(figsize=(10, 7))
 plt.scatter(x, y)
 plt.show()
 
+#초기값과 예측 함수 정의
+w = np.random.uniform(low=-1.0, high=1.0)
+b = np.random.uniform(low=-1.0, high=1.0)
+y_hat = w * x + b
+error = (y_hat - y) ** 2 #related with MSE
+
+
+#경사하강법 구현
+#최대 반복 횟수
+max_epoch = 1000
+
+#학습률
+learning_rate = 0.5
+
+errors = []
+w = np.random.uniform(low=-1.0, high=1.0)
+b = np.random.uniform(low=-1.0, high=1.0)
+
+for epoch in range(max_epoch):
+    y_hat = x * w + b
+    
+    error = ((y_hat - y)**2).mean()
+    if error < 0.0005:
+        break
+
+    w = w - learning_rate * ((y_hat - y) * x).mean()
+    b = b - learning_rate * (y_hat - y).mean()
+
+    errors.append(error)
+
+    if epoch % 5 == 0:
+        print("{0:2} w = {1:.5f}, b = {2:.5f} error = {3:.5f}".format(epoch, w, b, error))
+
+print("----" * 15)
+print("{0:2} w = {1:.1f}, b = {2:.1f} error = {3:.5f}".format(epoch, w, b, error))
+
+#visualization
+plt.figure(figsize=(10, 7))
+plt.plot(errors)
+plt.xlabel('Epochs')
+plt.ylabel('Error')
+plt.show()
+
+
 
