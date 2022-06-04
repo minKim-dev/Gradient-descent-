@@ -40,6 +40,6 @@ for epoch in range(100): #epoch는 학습진행을 의미
     W = W - w_grad
     b = b - b_grad
 
-    if epoch % 5 == 0:
+    if epoch % 5 == 0: #epoch가 5로 나누어 떨어지게 하는 이유는 그래프의 간격을 5로하기 위함.
         Y_Pred = W * X + b
         plot_prediction(Y_Pred, Y) #plot_prediction 함수 이용
